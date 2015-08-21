@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150819083204) do
+ActiveRecord::Schema.define(version: 20150820021141) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name"
@@ -28,6 +28,23 @@ ActiveRecord::Schema.define(version: 20150819083204) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "stock_prices", force: :cascade do |t|
+    t.date     "date",             null: false
+    t.integer  "code",             null: false
+    t.integer  "opening",          null: false
+    t.integer  "high",             null: false
+    t.integer  "low",              null: false
+    t.integer  "closing",          null: false
+    t.integer  "adjusted_closing", null: false
+    t.integer  "volume",           null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "stock_prices", ["code"], name: "index_stock_prices_on_code"
+  add_index "stock_prices", ["date", "code"], name: "index_stock_prices_on_date_and_code", unique: true
+  add_index "stock_prices", ["date"], name: "index_stock_prices_on_date"
 
   create_table "yahoo_finance_scrapers", force: :cascade do |t|
     t.datetime "created_at", null: false

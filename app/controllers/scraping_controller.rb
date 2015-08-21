@@ -3,20 +3,45 @@ class ScrapingController < ApplicationController
     require 'open-uri'
     require 'kconv'
     require 'nokogiri'
+    require 'csv'
 
     def test
-        #@s = yahoo
-        #@data = Scraper.new('http://info.finance.yahoo.co.jp/history/?code=6095.T&sy=1900&sm=1&sd=1&ey=2015&em=8&ed=19&tm=d&p=1')
-        start_date = Date.new(1900, 1, 1)
-        end_date = Date.new(2015,8, 18)
-        code = 6094
-        @a = YahooFinanceScraper.new(code, start_date, end_date)
-        @s = @a.stock_price_series
-        #@s = @a.html
-        #@s = @data.data.title
+        start_date = Date.new(1900, 8, 10)
+        end_date = Date.new(2015,8, 21)
+        code = 7203
+        
+        
+        
+        @stock_prices = YahooFinanceScraper.new(code, start_date, end_date)
+        @stock_prices = @stock_prices.stock_price_series#.sort { |k, v| k[0] <=> v[0] }
+        
+        @stock_prices.each{|k, v|
+            @stock = StockPrice.new
+            @stock.date = k
+            @stock.code = v[:code]
+            @stock.opening = v[:opening].gsub(/(\d{0,3}),(\d{3})/, '\1\2').to_i
+            @stock.high = v[:high].gsub(/(\d{0,3}),(\d{3})/, '\1\2').to_i
+            @stock.low = v[:low].gsub(/(\d{0,3}),(\d{3})/, '\1\2').to_i
+            @stock.closing = v[:closing].gsub(/(\d{0,3}),(\d{3})/, '\1\2').to_i
+            @stock.adjusted_closing = v[:adjusted_closing].gsub(/(\d{0,3}),(\d{3})/, '\1\2').to_i
+            @stock.volume = v[:volume].gsub(/(\d{0,3}),(\d{3})/, '\1\2').to_i
+            @stock.save 
+        }
+        
+        
+        
+    end
+    
+    #管理用画面
+    def admins
+        #@stock_price = StockPrice.new
+    end
+    
+    
+    private
+    def get_past_stock_prices(code, start_date, end_date)
+        
     end
 
-    def admin
-      
-    end
+
 end

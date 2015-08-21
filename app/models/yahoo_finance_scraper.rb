@@ -5,13 +5,13 @@ class YahooFinanceScraper < ActiveRecord::Base
     require 'nokogiri'
     
     attr_reader :url, :html, :stock_price, :tds, :stock_price_series
-    
+
     def initialize(code, start_date, end_date)
-        get_stock_prices(code, start_date, end_date)    
-        
+        get_stock_prices(code, start_date, end_date)
     end
+
     
-    #銘柄コードと日付から株価を取得する
+    #銘柄コードと指定された日付の株価を取得し、ハッシュで返す。
     def get_stock_prices(code, start_date, end_date)
         start_year, start_month, start_day = start_date.strftime("%Y,%m,%d").split(",")
         end_year, end_month, end_day = end_date.strftime("%Y,%m,%d").split(",")

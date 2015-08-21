@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2015-08-20
+  code: 1
+  opening: 1
+  high: 1
+  low: 1
+  closing: 1
+  adjusted_closing: 1
+  volume: 1
+
+two:
+  date: 2015-08-20
+  code: 1
+  opening: 1
+  high: 1
+  low: 1
+  closing: 1
+  adjusted_closing: 1
+  volume: 1
