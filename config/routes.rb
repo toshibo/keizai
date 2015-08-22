@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  unless Rails.env == "production"
+    mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  end
   root to: 'static_pages#index'
   #get ':controller(/:action(/:id(.:format)))'
   #get '/stocks/:id', to: 'stocks#show'
