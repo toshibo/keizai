@@ -1,0 +1,25 @@
+<table class="table table-bordered table-condensed" style="width: 760px">
+    <thead>
+        <th>日付</th>
+        <th>始値</th>
+        <th>終値</th>
+        <th>高値</th>
+        <th>安値</th>
+        <th>調整後株価</th>
+        <th>出来高</th>
+    </thead>
+    <tbody>
+        <% @stock_prices.each do |stock_price| %>
+        <tr>
+            <td style="width:130px"><%= stock_price.date %></td>
+            <td style="width:105px"><%= stock_price.opening %></td>
+            <td style="width:105px"><%= stock_price.closing %></td>
+            <td style="width:105px"><%= stock_price.high %></td>
+            <td style="width:105px"><%= stock_price.low %></td>
+            <td style="width:105px"><%= stock_price.adjusted_closing %></td>
+            <td style="width:105px"><%= stock_price.volume %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+<%= paginate @stock_prices %>

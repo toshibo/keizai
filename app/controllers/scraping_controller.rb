@@ -5,15 +5,18 @@ class ScrapingController < ApplicationController
     require 'nokogiri'
     require 'csv'
 
+    def create
+    end
+
     def test
-        start_date = Date.new(1900, 8, 10)
+        start_date = Date.new(2015, 8, 10)
         end_date = Date.new(2015,8, 21)
-        code = 7203
+        code = 6095
         
         
         
         @stock_prices = YahooFinanceScraper.new(code, start_date, end_date)
-        @stock_prices = @stock_prices.stock_price_series#.sort { |k, v| k[0] <=> v[0] }
+        @stock_prices = @stock_prices.stock_price_series
         
         @stock_prices.each{|k, v|
             @stock = StockPrice.new
@@ -25,7 +28,11 @@ class ScrapingController < ApplicationController
             @stock.closing = v[:closing].gsub(/(\d{0,3}),(\d{3})/, '\1\2').to_i
             @stock.adjusted_closing = v[:adjusted_closing].gsub(/(\d{0,3}),(\d{3})/, '\1\2').to_i
             @stock.volume = v[:volume].gsub(/(\d{0,3}),(\d{3})/, '\1\2').to_i
-            @stock.save 
+            begin
+                @stock.save
+            rescue => e
+                @stock = "すでに登録された株価が含まれています。"
+            end
         }
         
         
@@ -33,8 +40,8 @@ class ScrapingController < ApplicationController
     end
     
     #管理用画面
-    def admins
-        #@stock_price = StockPrice.new
+    def admin
+        @stock_price = StockPrice.new
     end
     
     

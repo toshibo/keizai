@@ -2,8 +2,15 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: 'static_pages#index'
-  get ':controller(/:action(/:id(.:format)))'
+  #get ':controller(/:action(/:id(.:format)))'
+  #get '/stocks/:id', to: 'stocks#show'
+  
+  get 'management' => 'scraping#admin'
+  get 'management/create' => 'scraping#create'
   post 'scraping/get_stock_prices' => 'scraping#get_stock_prices'
+  
+  resources :stocks
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
